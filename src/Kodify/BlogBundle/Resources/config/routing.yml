@@ -1,0 +1,12 @@
+home:
+    path:     /
+    defaults: { _controller: KodifyBlogBundle:Posts:index }
+authors:
+    path:     /authors
+    defaults: { _controller: KodifyBlogBundle:Authors:index }
+create_post:
+    path:     /posts/create
+    defaults: { _controller: KodifyBlogBundle:Posts:create }
+create_author:
+    path:     /authors/create
+    defaults: { _controller: KodifyBlogBundle:Authors:create }
