@@ -34,7 +34,7 @@ class AuthorsController extends Controller
             ]
         );
         $parameters = [
-            'form' => $form->createView(),
+            'form'        => $form->createView(),
             'breadcrumbs' => ['home' => 'Home', 'create_author' => 'Create Author']
         ];
 

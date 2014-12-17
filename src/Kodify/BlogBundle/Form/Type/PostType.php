@@ -12,7 +12,7 @@ class PostType extends AbstractType
             ->add('title')
             ->add('content')
             ->add('author')
-            ->add('save','submit',['attr' => ['class' => 'btn btn-success']]);
+            ->add('save', 'submit', ['attr' => ['class' => 'btn btn-success']]);
     }
 
     public function getName()

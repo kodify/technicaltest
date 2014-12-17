@@ -10,4 +10,5 @@ namespace Kodify\BlogBundle\Repository;
  */
 class AuthorRepository extends AbstractBaseRepository
 {
+    const LIST_DEFAULT_LIMIT = 8;
 }

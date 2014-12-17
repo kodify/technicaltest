@@ -10,7 +10,7 @@ class AuthorType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('save','submit',['attr' => ['class' => 'btn btn-success']]);
+            ->add('save', 'submit', ['attr' => ['class' => 'btn btn-success']]);
     }
 
     public function getName()

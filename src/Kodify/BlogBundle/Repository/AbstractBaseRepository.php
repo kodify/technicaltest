@@ -14,8 +14,14 @@ abstract class AbstractBaseRepository extends EntityRepository
 {
     const LIST_DEFAULT_LIMIT = 5;
 
-    public function latest($limit = self::LIST_DEFAULT_LIMIT, $offset = 0)
+    public function latest($limit = null, $offset = 0)
     {
+        if (is_null($limit)) {
+            $limit = static::LIST_DEFAULT_LIMIT;
+        }
+
         return $this->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
     }
+
+
 }
