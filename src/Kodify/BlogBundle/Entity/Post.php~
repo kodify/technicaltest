@@ -40,7 +40,6 @@ class Post extends AbstractBaseEntity
     private $content;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="posts")
      * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
      */
@@ -49,7 +48,7 @@ class Post extends AbstractBaseEntity
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -72,7 +71,7 @@ class Post extends AbstractBaseEntity
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -95,33 +94,10 @@ class Post extends AbstractBaseEntity
     /**
      * Get content
      *
-     * @return string
+     * @return string 
      */
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * Set author
-     *
-     * @param \Kodify\BlogBundle\Entity\Author $author
-     * @return Post
-     */
-    public function setAuthor(\Kodify\BlogBundle\Entity\Author $author = null)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * Get author
-     *
-     * @return \Kodify\BlogBundle\Entity\Author
-     */
-    public function getAuthor()
-    {
-        return $this->author;
     }
 }

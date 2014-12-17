@@ -2,7 +2,11 @@
 
 namespace Kodify\BlogBundle\Controller;
 
+use Kodify\BlogBundle\Entity\Author;
+use Kodify\BlogBundle\Form\Type\AuthorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class AuthorsController extends Controller
 {
@@ -17,5 +21,31 @@ class AuthorsController extends Controller
         }
 
         return $this->render($template, $parameters);
+    }
+
+    public function createAction(Request $request)
+    {
+        $form       = $this->createForm(
+            new AuthorType(),
+            new Author(),
+            [
+                'action' => $this->generateUrl('create_author'),
+                'method' => 'POST',
+            ]
+        );
+        $parameters = [
+            'form' => $form->createView(),
+            'breadcrumbs' => ['home' => 'Home', 'create_author' => 'Create Author']
+        ];
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $author = $form->getData();
+            $this->getDoctrine()->getManager()->persist($author);
+            $this->getDoctrine()->getManager()->flush();
+            $parameters['message'] = 'Author Created!';
+        }
+
+        return $this->render('KodifyBlogBundle:Default:create.html.twig', $parameters);
     }
 }

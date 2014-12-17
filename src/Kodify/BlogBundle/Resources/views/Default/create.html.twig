@@ -1,0 +1,13 @@
+{% extends 'KodifyBlogBundle::base.html.twig' %}
+
+{% block content %}
+    {% if message is defined %}
+        <div class="bg-primary">{{ message }}</div>
+    {% endif %}
+    <div class="form">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

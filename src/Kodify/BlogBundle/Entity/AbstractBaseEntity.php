@@ -24,11 +24,12 @@ abstract class AbstractBaseEntity
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Author
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        if (empty($this->createdAt)) {
+            $this->createdAt = $createdAt;
+        }
 
         return $this;
     }
@@ -36,7 +37,7 @@ abstract class AbstractBaseEntity
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -47,9 +48,8 @@ abstract class AbstractBaseEntity
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Author
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
 
@@ -57,9 +57,26 @@ abstract class AbstractBaseEntity
     }
 
     /**
+     * @ORM\PreUpdate
+     * @ORM\PrePersist
+     */
+    public function markAsUpdated()
+    {
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function initializeCreatedAt()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+    /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {

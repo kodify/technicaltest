@@ -1,5 +1,19 @@
-#post label {
+label {
     width: 200px;
+}
+#post label {
     height: 50px;
     vertical-align: middle;
+}
+.bg-primary {
+    padding: 4px;
+    margin-bottom: 10px;
+}
+
+.navbar-nav li.active {
+    background: #f5f5f5;
+}
+
+.thumbnail img {
+    height: 200px;
 }
