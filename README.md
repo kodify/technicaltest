@@ -37,15 +37,18 @@ with some information, mainly about the mysql configuration)
 3) Ready to go!! * 
 
 ### The test
+
 1) Our frontend girl wanted to check also your capabilities in her terrain, so 
 we included this part on the test. On the Home page, the blog posts (or similar) 
 are shown in a single column, one on top of the other. We require you to do the 
 required changes to have that list on two columns.
+
 2) This blog is that simple that we forgot to include the hability do comment on 
 the posts. We want to add the hability to create comments on the post page, and 
 show the previous comments on that same post page. 
 Every comment should be related to an author (the same way as the post is related
 to an author, we don't need anything more complicated).
+
 
 
 * If you need help creating the database schema, to create the empty database 
