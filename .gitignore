@@ -30,7 +30,5 @@
 /app/phpunit.xml
 /phpunit.xml
 
-# Composer PHAR
-/composer.phar
-
+.iml
 .idea/
