@@ -3,8 +3,8 @@ Welcome to the technical test at Kodify! :)
 We tried to keep the test/exercise as simple as we could trying to be able
 to determine whether we will work fine together or not. 
 
-1) The Test
---------
+1) The Code
+-----------
 
 The test is based in symfony and we used a basic instalation without much
 plugins, feel free to add as much plugins/bundles as you require.
@@ -36,7 +36,8 @@ with some information, mainly about the mysql configuration)
     php composer.phar install
 3) Ready to go!! * 
 
-### The test
+2) The Test
+-----------
 
 1) Our frontend girl wanted to check also your capabilities in her terrain, so 
 we included this part on the test. On the Home page, the blog posts (or similar) 
@@ -51,7 +52,7 @@ to an author, we don't need anything more complicated).
 
 
 
-* If you need help creating the database schema, to create the empty database 
+Extra: If you need help creating the database schema, to create the empty database
 you can use:  
     php app/console doctrine:database:create
     php app/console doctrine:schema:update
