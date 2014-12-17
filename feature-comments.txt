@@ -1,0 +1,39 @@
+Feature: Comments
+  As a Blog manager
+  I want to allow comments from authors
+  In order that they interact a little bit
+
+  Background:
+    Given the following authors exist:
+      | name             |
+      | someone          |
+      | over             |
+      | rainbow          |
+    And the following posts exist:
+      | title     | content      | author  |
+      | way       | up high      | someone |
+      | land      | I heard of   | over    |
+      | once      | In a lullaby | lullaby |
+    And the following comments exist:
+      | text              | post title | author  |
+      | nice!!            | way        | someone |
+      | Is that a song?   | land       | lullaby |
+
+  Scenario: No comments on a post page
+    Given I visit the page for the post with title "once"
+    Then I should see a message saying there are no comments
+
+  Scenario: See comments on a post page
+    Given I visit the page for the post with title "way"
+    Then I should see a comments section with 1 comment
+    And The comment I see says "nice!!"
+    And I don't see the comment "Is that a song?"
+
+  Scenario: Create a comment
+    Given I visit the page for the post with title "once"
+    When I click on the button "create comment"
+    And I fill the form with "{'text':'Judy Garland was great!', 'author':'someone'}"
+    And I click on the button "publish"
+    Then a comment should be created for the post with the provided data
+    Then I should see a comments section with 1 comment
+    And The comment I see says "Judy Garland was great!"
