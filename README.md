@@ -61,6 +61,7 @@ of the story.
 
 Extra: If you need help creating the database schema, to create the empty database
 you can use:  
+
     php app/console doctrine:database:create
     php app/console doctrine:schema:update
 
