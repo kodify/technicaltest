@@ -13,11 +13,11 @@ Feature: Comments
       | title     | content      | author  |
       | way       | up high      | someone |
       | land      | I heard of   | over    |
-      | once      | In a lullaby | lullaby |
+      | once      | In a lullaby | rainbow |
     And the following comments exist:
       | text              | post title | author  |
       | nice!!            | way        | someone |
-      | Is that a song?   | land       | lullaby |
+      | Is that a song?   | land       | rainbow |
 
   Scenario: No comments on a post page
     Given I visit the page for the post with title "once"
