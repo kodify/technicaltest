@@ -34,6 +34,7 @@ The steps to start with the test are:
 
 2) Execute composer to install the required dependencies. (You will be required 
 with some information, mainly about the mysql configuration) 
+
     php composer.phar install
     
 3) Ready to go!! 
