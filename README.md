@@ -36,7 +36,7 @@ The steps to start with the test are:
 with some information, mainly about the mysql configuration) 
     php composer.phar install
     
-3) Ready to go!! * 
+3) Ready to go!! 
 
 2) The Test
 -----------
@@ -49,8 +49,8 @@ required changes to have that list on two columns.
 On the file feature-two-columns.txt at the root of the project you will find the definition
 of the story.
 
-2) This blog is that simple that we forgot to include the hability do comment on 
-the posts. We want to add the hability to create comments on the post page, and 
+2) This blog is that simple that we forgot to include the ability do comment on 
+the posts. We want to add the ability to create comments on the post page, and 
 show the previous comments on that same post page. 
 Every comment should be related to an author (the same way as the post is related
 to an author, we don't need anything more complicated).
