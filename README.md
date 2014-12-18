@@ -13,7 +13,8 @@ Everything you see is open to comments/valorations from your part, we will
 be glad to hear your comments!!
 
 There will be two small user stories we'll like you to implement on the test.
-If you had any doubt: INSERT WHAT TO DO HERE! ;)
+If you had any doubt make the assumptions you need, and just comment them as
+a comment on your pull request.
 
 ### What to deliver
 
@@ -34,6 +35,7 @@ The steps to start with the test are:
 2) Execute composer to install the required dependencies. (You will be required 
 with some information, mainly about the mysql configuration) 
     php composer.phar install
+    
 3) Ready to go!! * 
 
 2) The Test
@@ -61,3 +63,7 @@ Extra: If you need help creating the database schema, to create the empty databa
 you can use:  
     php app/console doctrine:database:create
     php app/console doctrine:schema:update
+
+Extra 2: We use a slightly modified version of the Symfony2 Coding standards, feel free 
+to use the coding standards you want, but try to be consistent with the ones you choose. 
+For reference: http://symfony.com/doc/current/contributing/code/standards.html
