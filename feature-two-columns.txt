@@ -13,7 +13,7 @@ Feature: Two columns for post list
       | title     | content      | author  |
       | way       | up high      | someone |
       | land      | I heard of   | over    |
-      | once      | In a lullaby | lullaby |
+      | once      | In a lullaby | rainbow |
 
 
   Scenario: Visit home page
