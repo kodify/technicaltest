@@ -36,11 +36,14 @@ The steps to start with the test are:
 with some information, mainly about the mysql configuration) 
 
     php composer.phar install
-    
-3) Ready to go!! 
+
+3) Do an empty commit with the message "I'm ready to start" for us to know the timing.
+
+4) Ready to go!! 
 
 2) The Test
 -----------
+**NOTE**: We encourage you to make as much commits as possible with meaningul messages instead of one big bang commit at the end.
 
 1) Our frontend girl wanted to check also your capabilities in her terrain, so 
 we included this part on the test. On the Home page, the blog posts (or similar) 
