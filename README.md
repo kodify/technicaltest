@@ -53,14 +53,16 @@ we included this part on the test. On the Home page, the blog posts (or similar)
 are shown in a single column, one on top of the other. We require you to do the 
 required changes to have that list on two columns.
 
-On the file feature-two-columns.txt at the root of the project you will find the definition
+On the file **feature-two-columns.txt** at the root of the project you will find the definition
 of the story.
 
 2) The blog is quite simple with just a couple of entities for post and author. We would like you
 to implement a simple rating system on the post page, and allow the ordering of the posts by rating or date
 on the posts list. (Choose the ordering algorithm that you desire, we will discuss it later)
-We don't need to know who did the rating, so the same user can vote as many times as he wants. 
-In the file feature-rating.txt at the root of the project you will find the definition
+
+We don't need to know who did the rating, so the same user can vote as many times as he wants. (We want a simple option) 
+
+In the file **feature-rating.txt** at the root of the project you will find the definition
 of the story.
 
 Extra: If you need help creating the database schema, to create the empty database
