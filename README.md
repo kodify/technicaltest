@@ -45,6 +45,9 @@ with some information, mainly about the mysql configuration)
 -----------
 **NOTE**: We encourage you to make as much commits as possible with meaningul messages instead of one big bang commit at the end.
 
+**NOTE2**: We encourage you to test you code (with functional, integration or unit tests, as you feel more confortable).
+
+
 1) Our frontend girl wanted to check also your capabilities in her terrain, so 
 we included this part on the test. On the Home page, the blog posts (or similar) 
 are shown in a single column, one on top of the other. We require you to do the 
@@ -53,15 +56,12 @@ required changes to have that list on two columns.
 On the file feature-two-columns.txt at the root of the project you will find the definition
 of the story.
 
-2) This blog is that simple that we forgot to include the ability do comment on 
-the posts. We want to add the ability to create comments on the post page, and 
-show the previous comments on that same post page. 
-Every comment should be related to an author (the same way as the post is related
-to an author, we don't need anything more complicated).
-
-In the file feature-comments.txt at the root of the project you will find the definition
+2) The blog is quite simple with just a couple of entities for post and author. We would like you
+to implement a simple rating system on the post page, and allow the ordering of the posts by rating or date
+on the posts list. (Choose the ordering algorithm that you desire, we will discuss it later)
+We don't need to know who did the rating, so the same user can vote as many times as he wants. 
+In the file feature-rating.txt at the root of the project you will find the definition
 of the story.
-
 
 Extra: If you need help creating the database schema, to create the empty database
 you can use:  
