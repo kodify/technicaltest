@@ -100,7 +100,7 @@ class Comment extends AbstractBaseEntity
     }
 
     /**
-     * @return mixed
+     * @return Post
      */
     public function getPost()
     {
@@ -110,7 +110,7 @@ class Comment extends AbstractBaseEntity
     /**
      * @param Post $post
      */
-    public function setPost($post)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
     }
