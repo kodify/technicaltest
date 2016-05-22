@@ -6,11 +6,10 @@
             {% endfor %}
         </div>
     {% endif %}
+    {% include 'KodifyBlogBundle:Comment:create.html.twig' with {'form': formComment} %}
     {% if post.comments | length == 0 %}
         {% include 'KodifyBlogBundle:Comment:List/empty.html.twig' with {'formComment': formComment } %}
     {% else %}
         {% include 'KodifyBlogBundle:Comment:List/index.html.twig' with {'post': post, 'formComment': formComment } %}
     {% endif %}
-
-    {% include 'KodifyBlogBundle:Comment:create.html.twig' with {'form': formComment} %}
 </div>

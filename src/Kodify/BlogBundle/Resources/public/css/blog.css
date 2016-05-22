@@ -17,3 +17,7 @@ label {
 .thumbnail img {
     height: 200px;
 }
+
+.new-comment-area {
+    margin-bottom: 1.5em;
+}
