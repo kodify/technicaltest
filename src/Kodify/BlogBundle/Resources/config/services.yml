@@ -1,7 +1,6 @@
+imports:
+    - { resource: 'services/handlers.yml' }
 services:
-#    kodify_blog.example:
-#        class: Kodify\BlogBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
       kodify_blog.form.data_transformer.post_to_number:
           class: Kodify\BlogBundle\Form\DataTransformer\PostToNumberTransformer
           arguments: ["@doctrine.orm.entity_manager"]

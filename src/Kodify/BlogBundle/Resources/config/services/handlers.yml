@@ -1,0 +1,4 @@
+services:
+    kodify.blog.create_comment:
+      class: Kodify\BlogBundle\Form\Handler\CommentCreateHandler
+      arguments: ["@doctrine.orm.entity_manager"]
