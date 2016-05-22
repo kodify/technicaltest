@@ -1,0 +1,16 @@
+<div id="comments-area">
+    {% if app.session.flashBag.has('comment-success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('comment-success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if post.comments | length == 0 %}
+        {% include 'KodifyBlogBundle:Comment:List/empty.html.twig' with {'formComment': formComment } %}
+    {% else %}
+        {% include 'KodifyBlogBundle:Comment:List/index.html.twig' with {'post': post, 'formComment': formComment } %}
+    {% endif %}
+
+    {% include 'KodifyBlogBundle:Comment:create.html.twig' with {'form': formComment} %}
+</div>
