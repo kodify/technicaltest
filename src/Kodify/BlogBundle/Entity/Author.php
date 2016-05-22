@@ -2,6 +2,7 @@
 
 namespace Kodify\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,16 +31,26 @@ class Author extends AbstractBaseEntity
     private $name;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"persist"})
      */
-    protected $videos;
+    protected $posts;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author", cascade={"persist"})
+     */
+    protected $comments;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->videos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->post = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function __toString()
@@ -81,35 +92,82 @@ class Author extends AbstractBaseEntity
     }
 
     /**
-     * Add videos
+     * Add a post if it's not already associated with this author
      *
-     * @param \Kodify\BlogBundle\Entity\Post $videos
+     * @param Post $post
      * @return Author
      */
-    public function addVideo(\Kodify\BlogBundle\Entity\Post $videos)
+    public function addPost(Post $post)
     {
-        $this->videos[] = $videos;
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+        }
 
         return $this;
     }
 
     /**
-     * Remove videos
+     * Remove a post if it's associated with this author
      *
-     * @param \Kodify\BlogBundle\Entity\Post $videos
+     * @param Post $post
+     * @return Author
      */
-    public function removeVideo(\Kodify\BlogBundle\Entity\Post $videos)
+    public function removePost(Post $post)
     {
-        $this->videos->removeElement($videos);
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+        }
+
+        return $this;
     }
 
     /**
-     * Get videos
+     * Get all post associated with this author
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getVideos()
+    public function getPosts()
     {
-        return $this->videos;
+        return $this->posts;
+    }
+
+    /**
+     * Add a comment if it's not already associated with the author
+     *
+     * @param Comment $comment
+     * @return Author
+     */
+    public function addComment(Comment $comment)
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a comment if it's associated with this author,
+     *
+     * @param Comment $comment
+     * @return Author
+     */
+    public function removeComment(Comment $comment)
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get all comments associated with this author
+     *
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

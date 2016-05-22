@@ -2,6 +2,7 @@
 
 namespace Kodify\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,6 +46,22 @@ class Post extends AbstractBaseEntity
      * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
      */
     protected $author;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist"})
+     */
+    protected $comments;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -105,10 +122,10 @@ class Post extends AbstractBaseEntity
     /**
      * Set author
      *
-     * @param \Kodify\BlogBundle\Entity\Author $author
+     * @param Author $author
      * @return Post
      */
-    public function setAuthor(\Kodify\BlogBundle\Entity\Author $author = null)
+    public function setAuthor(Author $author = null)
     {
         $this->author = $author;
 
@@ -124,4 +141,51 @@ class Post extends AbstractBaseEntity
     {
         return $this->author;
     }
+
+    /**
+     * Add a comment if it's not already associated with the author
+     *
+     * @param Comment $comment
+     * @return Author
+     */
+    public function addComment(Comment $comment)
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a comment if it's associated with this author,
+     *
+     * @param Comment $comment
+     * @return Author
+     */
+    public function removeComment(Comment $comment)
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get all comments associated with this author
+     *
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+
 }
