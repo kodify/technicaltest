@@ -2,6 +2,7 @@
 
 namespace Kodify\BlogBundle\Tests\Controller;
 
+use Kodify\BlogBundle\Entity\Comment;
 use Kodify\BlogBundle\Entity\Post;
 use Kodify\BlogBundle\Entity\Author;
 use Kodify\BlogBundle\Tests\BaseFunctionalTest;
@@ -78,5 +79,54 @@ class PostsControllerTest extends BaseFunctionalTest
             'lessThanLimit' => ['count' => $rand, 'expectedCount' => $rand],
             'moreThanLimit' => ['count' => rand(6, 9), 'expectedCount' => 5],
         ];
+    }
+
+    public function testPostWithoutComments()
+    {
+        //create author
+        $author = new Author();
+        $author->setName('Author');
+        $this->entityManager()->persist($author);
+        //create post
+        $post = new Post();
+        $post->setTitle('Title');
+        $post->setContent('Content');
+        $post->setAuthor($author);
+        $this->entityManager()->persist($post);
+
+        $author->addPost($post);
+        $this->entityManager()->flush();
+
+        $crawler = $this->client->request('GET', '/posts/1');
+        $this->assertTextFound($crawler, "There are no comments, let's create some!!");
+    }
+
+    public function testPostWithComments()
+    {
+        //create author
+        $author = new Author();
+        $author->setName('Author');
+        $this->entityManager()->persist($author);
+        //create post
+        $post = new Post();
+        $post->setTitle('Title');
+        $post->setContent('Content');
+        $post->setAuthor($author);
+        $this->entityManager()->persist($post);
+
+        //create comment
+        $comment = new Comment();
+        $comment->setAuthor($author);
+        $comment->setPost($post);
+        $comment->setText('Comment text');
+        $this->entityManager()->persist($comment);
+
+        $author->addComment($comment);
+        $post->addComment($comment);
+        $this->entityManager()->flush();
+
+        $crawler = $this->client->request('GET', '/posts/1');
+        $this->assertTextNotFound($crawler, "There are no comments, let's create some!!");
+        $this->assertTextFound($crawler, 'Comment text');
     }
 }

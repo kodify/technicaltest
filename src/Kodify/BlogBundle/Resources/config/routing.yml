@@ -13,3 +13,7 @@ view_post:
 create_author:
     path:     /authors/create
     defaults: { _controller: KodifyBlogBundle:Authors:create }
+# Comments
+create_comment:
+    path:     /comments/create/{id}
+    defaults: { _controller: KodifyBlogBundle:Comments:create }

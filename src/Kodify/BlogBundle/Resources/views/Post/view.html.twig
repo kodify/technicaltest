@@ -10,4 +10,7 @@
             {{ post.content }}
         </div>
     </div>
+
+    {% include 'KodifyBlogBundle:Comment:view.html.twig' with {'post': post, 'formComment': formComment } %}
+
 {% endblock %}
