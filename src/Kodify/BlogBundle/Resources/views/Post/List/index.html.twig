@@ -3,13 +3,18 @@
 {% block content %}
 
     {% for post in posts %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a href="{{ path('view_post',{id: post.id}) }}">{{ post.title }}</a>
-                <span class="pull-right">by: {{ post.author.name }} on: {{ post.createdAt|date("m/d/Y") }}</span>
-            </div>
-            <div class="panel-body">
-                {{ post.content }}
+        {# Use col-xs-6 to show post in two columns on any devices,
+        I create a div to surround the existing one because col-xs-6 has padding left and right that make the post box looks weird
+        and whitout separation between the two columns #}
+        <div class="col-xs-6">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    <a href="{{ path('view_post',{id: post.id}) }}">{{ post.title }}</a>
+                    <span class="pull-right">by: {{ post.author.name }} on: {{ post.createdAt|date("m/d/Y") }}</span>
+                </div>
+                <div class="panel-body">
+                    {{ post.content }}
+                </div>
             </div>
         </div>
     {% endfor %}
