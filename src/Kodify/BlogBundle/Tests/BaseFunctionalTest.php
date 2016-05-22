@@ -4,7 +4,7 @@ namespace Kodify\BlogBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BaseFunctionalTest extends WebTestCase
+abstract class BaseFunctionalTest extends WebTestCase
 {
     protected $entityManager;
     protected $client;
@@ -24,6 +24,7 @@ class BaseFunctionalTest extends WebTestCase
     {
         $this->clearTableByName('Author');
         $this->clearTableByName('Post');
+        $this->clearTableByName('Comment');
     }
 
     protected function entityManager()
