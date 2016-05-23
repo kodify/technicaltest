@@ -4,6 +4,7 @@ namespace Kodify\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Author
@@ -27,6 +28,7 @@ class Author extends AbstractBaseEntity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=150)
+     * @Assert\NotBlank()
      */
     private $name;
 
