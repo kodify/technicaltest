@@ -7,8 +7,15 @@ use Kodify\BlogBundle\Entity\Post;
 use Kodify\BlogBundle\Entity\Author;
 use Kodify\BlogBundle\Tests\BaseFunctionalTest;
 
+/**
+ * Class PostsControllerTest
+ * @package Kodify\BlogBundle\Tests\Controller
+ */
 class PostsControllerTest extends BaseFunctionalTest
 {
+    /**
+     * test index withou post, should show a message
+     */
     public function testIndexNoPosts()
     {
         $crawler = $this->client->request('GET', '/');
@@ -16,6 +23,10 @@ class PostsControllerTest extends BaseFunctionalTest
     }
 
     /**
+     * Text index with post, should show only the number of post defined in $countToCheck
+     * @param int $postsToCreate
+     * @param int $countToCheck
+     *
      * @dataProvider countDataProvider
      */
     public function testIndexWithPosts($postsToCreate, $countToCheck)
@@ -39,12 +50,18 @@ class PostsControllerTest extends BaseFunctionalTest
         }
     }
 
+    /**
+     * test access to no existing post
+     */
     public function testViewNonExistingPost()
     {
         $crawler = $this->client->request('GET', '/posts/1');
         $this->assertTextFound($crawler, 'Post not found', 1);
     }
 
+    /**
+     * test access to existing post
+     */
     public function testViewPost()
     {
         $this->createPosts(2);
@@ -55,6 +72,10 @@ class PostsControllerTest extends BaseFunctionalTest
         $this->assertTextNotFound($crawler, 'Content1');
     }
 
+    /**
+     * Function to creates as much post as indicated in $count
+     * @param $count
+     */
     protected function createPosts($count)
     {
         $author = new Author();
@@ -79,54 +100,5 @@ class PostsControllerTest extends BaseFunctionalTest
             'lessThanLimit' => ['count' => $rand, 'expectedCount' => $rand],
             'moreThanLimit' => ['count' => rand(6, 9), 'expectedCount' => 5],
         ];
-    }
-
-    public function testPostWithoutComments()
-    {
-        //create author
-        $author = new Author();
-        $author->setName('Author');
-        $this->entityManager()->persist($author);
-        //create post
-        $post = new Post();
-        $post->setTitle('Title');
-        $post->setContent('Content');
-        $post->setAuthor($author);
-        $this->entityManager()->persist($post);
-
-        $author->addPost($post);
-        $this->entityManager()->flush();
-
-        $crawler = $this->client->request('GET', '/posts/1');
-        $this->assertTextFound($crawler, "There are no comments, let's create some!!");
-    }
-
-    public function testPostWithComments()
-    {
-        //create author
-        $author = new Author();
-        $author->setName('Author');
-        $this->entityManager()->persist($author);
-        //create post
-        $post = new Post();
-        $post->setTitle('Title');
-        $post->setContent('Content');
-        $post->setAuthor($author);
-        $this->entityManager()->persist($post);
-
-        //create comment
-        $comment = new Comment();
-        $comment->setAuthor($author);
-        $comment->setPost($post);
-        $comment->setText('Comment text');
-        $this->entityManager()->persist($comment);
-
-        $author->addComment($comment);
-        $post->addComment($comment);
-        $this->entityManager()->flush();
-
-        $crawler = $this->client->request('GET', '/posts/1');
-        $this->assertTextNotFound($crawler, "There are no comments, let's create some!!");
-        $this->assertTextFound($crawler, 'Comment text');
     }
 }
