@@ -21,3 +21,16 @@ label {
 .new-comment-area {
     margin-bottom: 1.5em;
 }
+.panel-heading {
+    overflow: hidden;
+}
+.post-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.post-content-preview {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
