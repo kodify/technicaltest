@@ -27,7 +27,7 @@ class Post extends AbstractBaseEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="text")
+     * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
      *
      */
@@ -51,6 +51,7 @@ class Post extends AbstractBaseEntity
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist"})
+     * @ORM\OrderBy({"updatedAt" = "DESC"})
      */
     protected $comments;
 
@@ -173,7 +174,7 @@ class Post extends AbstractBaseEntity
     }
 
     /**
-     * Get all comments associated with this author
+     * Get all comments associated with this post
      *
      * @return ArrayCollection
      */
@@ -181,6 +182,17 @@ class Post extends AbstractBaseEntity
     {
         return $this->comments;
     }
+
+    /**
+     * Get last 10 comments associated with this post
+     *
+     * @return ArrayCollection
+     */
+    public function getLatestComments()
+    {
+        return $this->comments->slice(0, 10);
+    }
+
 
     public function __toString()
     {
