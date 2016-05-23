@@ -10,17 +10,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * Class CommentsController
+ * @package Kodify\BlogBundle\Controller
+ */
 class CommentsController extends Controller
 {
     /**
+     * Function to create a new comment
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request, Post $post)
     {
+        $newComment = new Comment();
+        $newComment->setPost($post);
         $form = $this->createForm(
             new CommentType(),
-            new Comment(),
+            $newComment,
             [
                 'action' => $this->generateUrl('create_comment', ['id' => $post->getId()]),
                 'method' => 'POST',
@@ -28,7 +35,6 @@ class CommentsController extends Controller
             ]
         );
         $parameters = [
-            'form'        => $form->createView(),
             'breadcrumbs' => ['home' => 'Home']
         ];
 
@@ -45,6 +51,10 @@ class CommentsController extends Controller
             return $this->redirect($viewPostUrl);
         }
 
+        // the form element should be passed to the view after validate it to show errors
+        $parameters['form'] = $form->createView();
+
+        //if something goes wrong show the form again
         return $this->render('KodifyBlogBundle:Default:create.html.twig', $parameters);
     }
 }

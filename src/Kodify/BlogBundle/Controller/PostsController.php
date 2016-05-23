@@ -9,8 +9,16 @@ use Kodify\BlogBundle\Form\Type\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class PostsController
+ * @package Kodify\BlogBundle\Controller
+ */
 class PostsController extends Controller
 {
+    /**
+     * Show 5 post where 5 is the limit defined in PostRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction()
     {
         $posts      = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->latest();
@@ -25,7 +33,7 @@ class PostsController extends Controller
     }
 
     /**
-     *
+     * Show post title, content and latest 10 comments identified by $id and create comment form
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -67,7 +75,6 @@ class PostsController extends Controller
             ]
         );
         $parameters = [
-            'form'        => $form->createView(),
             'breadcrumbs' => ['home' => 'Home', 'create_post' => 'Create Post']
         ];
 
@@ -78,6 +85,9 @@ class PostsController extends Controller
             $this->getDoctrine()->getManager()->flush();
             $parameters['message'] = 'Post Created!';
         }
+
+        // the form element should be passed to the view after validate it to show errors
+        $parameters['form'] = $form->createView();
 
         return $this->render('KodifyBlogBundle:Default:create.html.twig', $parameters);
     }

@@ -25,22 +25,22 @@ class Comment extends AbstractBaseEntity
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @ORM\Column(name="text", type="text")
+     * @Assert\NotBlank()
      */
     private $text;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="Comments")
      * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     protected $author;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="Comments")
      * @ORM\JoinColumn(name="postId", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     protected $post;
 
