@@ -31,7 +31,7 @@ There are two small user stories we'll like you to implement on the test. If you
 
 ### User Stories
 
-1. Right now our blog let's everyone create authors and write posts. We want to add a security layer to avoid this. The user has to be able to:
+1. Right now our blog lets everyone create authors and write posts. We want to add a security layer to avoid this. The user has to be able to:
     * **Register:** Will need to introduce his name, email, password.
     * **Login:** Will be able to login using his email and password.
     * **Write Posts:** Once logged in the user will be able to write posts. Right now we can assign the autorship of a blogpost to any user. We don't want this anymore. The user who writes a post will need to be its author
@@ -48,6 +48,6 @@ We ask you to deliver a pull request to this same repository with your solution 
 * The blog design is quite nice. Please don't screw it up with awful styles.
 * Write as much tests as you feel. This test is using PHPUnit but if you prefer another solution feel free to use it.
 * If you use vagrant, docker or any other solution please include the config files so we can take a look.
-* Use symfony 2 coding standards. 
+* Use [symfony 2 coding standards](http://symfony.com/doc/current/contributing/code/standards.html). 
 * If you see something you don't like in the code feel free to improve it.
 
