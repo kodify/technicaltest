@@ -25,6 +25,16 @@ class AuthorsControllerTest extends BaseFunctionalTest
         );
     }
 
+    protected function createAuthors($count)
+    {
+        for ($i = 0; $i < $count; ++$i) {
+            $author = new Author();
+            $author->setName("Name{$i}");
+            $this->entityManager()->persist($author);
+        }
+        $this->entityManager()->flush();
+    }
+
     public function testCreateAuthorGetRequest()
     {
         $crawler = $this->client->request('GET', '/authors/create');
@@ -37,16 +47,6 @@ class AuthorsControllerTest extends BaseFunctionalTest
         $crawler = $this->client->request('POST', '/authors/create');
         $this->assertTextNotFound($crawler, "Author Created!");
         $this->assertTextFound($crawler, 'Name');
-    }
-
-    protected function createAuthors($count)
-    {
-        for ($i = 0; $i < $count; ++$i) {
-            $author = new Author();
-            $author->setName("Name{$i}");
-            $this->entityManager()->persist($author);
-        }
-        $this->entityManager()->flush();
     }
 
 }

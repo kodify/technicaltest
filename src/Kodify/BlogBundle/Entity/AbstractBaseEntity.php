@@ -21,20 +21,6 @@ abstract class AbstractBaseEntity
     protected $updatedAt;
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        if (empty($this->createdAt)) {
-            $this->createdAt = $createdAt;
-        }
-
-        return $this;
-    }
-
-    /**
      * Get createdAt
      *
      * @return \DateTime
@@ -45,13 +31,15 @@ abstract class AbstractBaseEntity
     }
 
     /**
-     * Set updatedAt
+     * Set createdAt
      *
-     * @param \DateTime $updatedAt
+     * @param \DateTime $createdAt
      */
-    public function setUpdatedAt($updatedAt = null)
+    public function setCreatedAt($createdAt)
     {
-        $this->updatedAt = $updatedAt;
+        if (empty($this->createdAt)) {
+            $this->createdAt = $createdAt;
+        }
 
         return $this;
     }
@@ -81,5 +69,17 @@ abstract class AbstractBaseEntity
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt = null)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

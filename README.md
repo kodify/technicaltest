@@ -3,8 +3,8 @@ Welcome to the technical test at Kodify! :)
 We tried to keep the test/exercise as simple as we could trying to be able
 to determine whether we will work fine together or not. 
 
-1) The Code
------------
+The Code
+--------
 
 The test is based in symfony and we used a basic instalation without much
 plugins, feel free to add as much plugins/bundles as you require.
@@ -28,47 +28,43 @@ we have composer.phar into the repo for example, so the installation is quite
 simple. The only external thing you will need is a Mysql server somewhere, as 
 you can use symfony's bundled server if needed, but feel free to use the stack
 you prefer.
+
 The steps to start with the test are: 
 
-1) Clone this repository
+1. Clone this repository
 
-2) Execute composer to install the required dependencies. (You will be required 
+2. Execute composer to install the required dependencies. (You will be required 
 with some information, mainly about the mysql configuration) 
 
     php composer.phar install
 
-3) Do an empty commit with the message "I'm ready to start" for us to know the timing.
+3. Do an empty commit with the message "I'm ready to start" for us to know the timing.
 
-4) Ready to go!! 
+4. Ready to go!! 
 
-2) The Test
------------
-**NOTE**: We encourage you to make as much commits as possible with meaningul messages instead of one big bang commit at the end.
+The Test
+--------
+The tests consists in the following 2 tasks.
 
-1) Our frontend girl wanted to check also your capabilities in her terrain, so 
-we included this part on the test. On the Home page, the blog posts (or similar) 
-are shown in a single column, one on top of the other. We require you to do the 
-required changes to have that list on two columns.
+1. Right now our blog let's everyone create authors and write posts. We want to add
+   a security layer to avoid this. The user has to be able to:
+    * **Register:** Will need to introduce his name, email, password.
+    * **Login:** Will be able to login using his email and password.
+    * **Write Posts:** Once logged in the user will be able to write posts. Right now we can
+      assign the autorship of a blogpost to any user. We don't want this anymore.
+      The user who writes a post will need to be its author
+    * **Post Comments:** Only a loggedin user can write comments in a post. The autorship of 
+      the comment has to work like posts.
+  
+2. We also want to update our comment post form. Right now we are doing a 
+   classic synchronous post to a controller. We want to ajaxify it. 
+   Do whatever necesary to make the call async via AJAX. 
 
-On the file **feature-two-columns.txt** at the root of the project you will find the definition
-of the story.
+###Notes
+* We encourage you to make as much commits as possible with meaninful messages instead of one big bang commit at the end.
+* The blog design is quite nice. Please don't screw it up with awful styles.
+* Write as much tests as you feel. This test is using PHPUnit but if you prefer another solution feel free to use it.
+* If you use vagrant, docker or any other solution please include the config files so we can take a look.
+* Use symfony 2 coding standards. 
+* If you see something you don't like in the code feel free to improve it.
 
-2) This blog is that simple that we forgot to include the ability do comment on 
-the posts. We want to add the ability to create comments on the post page, and 
-show the previous comments on that same post page. 
-Every comment should be related to an author (the same way as the post is related
-to an author, we don't need anything more complicated).
-
-In the file feature-comments.txt at the root of the project you will find the definition
-of the story.
-
-
-Extra: If you need help creating the database schema, to create the empty database
-you can use:  
-
-    php app/console doctrine:database:create
-    php app/console doctrine:schema:update
-
-Extra 2: We use a slightly modified version of the Symfony2 Coding standards, feel free 
-to use the coding standards you want, but try to be consistent with the ones you choose. 
-For reference: http://symfony.com/doc/current/contributing/code/standards.html

@@ -15,6 +15,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Comment extends AbstractBaseEntity
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="Comments")
+     * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    protected $author;
+    /**
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="Comments")
+     * @ORM\JoinColumn(name="postId", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    protected $post;
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,27 +34,12 @@ class Comment extends AbstractBaseEntity
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      * @ORM\Column(name="text", type="text")
      * @Assert\NotBlank()
      */
     private $text;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Author", inversedBy="Comments")
-     * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
-     * @Assert\NotBlank()
-     */
-    protected $author;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="Comments")
-     * @ORM\JoinColumn(name="postId", referencedColumnName="id")
-     * @Assert\NotBlank()
-     */
-    protected $post;
 
     /**
      * Get id
@@ -53,6 +50,17 @@ class Comment extends AbstractBaseEntity
     {
         return $this->id;
     }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
     /**
      * Set text
      *
@@ -67,13 +75,13 @@ class Comment extends AbstractBaseEntity
     }
 
     /**
-     * Get text
+     * Get author
      *
-     * @return string
+     * @return Author
      */
-    public function getText()
+    public function getAuthor()
     {
-        return $this->text;
+        return $this->author;
     }
 
     /**
@@ -87,16 +95,6 @@ class Comment extends AbstractBaseEntity
         $this->author = $author;
 
         return $this;
-    }
-
-    /**
-     * Get author
-     *
-     * @return Author
-     */
-    public function getAuthor()
-    {
-        return $this->author;
     }
 
     /**

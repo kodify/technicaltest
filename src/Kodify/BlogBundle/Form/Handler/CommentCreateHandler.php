@@ -32,7 +32,7 @@ class CommentCreateHandler
 
         $form->handleRequest($request);
 
-        if (($form->isSubmitted())&&($form->isValid())) {
+        if (($form->isSubmitted()) && ($form->isValid())) {
             $comment = $form->getData();
 
             $this->entityManager->persist($comment);

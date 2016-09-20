@@ -12,8 +12,8 @@ class AuthorTypeTest extends TypeTestCase
         $formData = array(
             'name' => 'test',
         );
-        $type     = new AuthorType();
-        $form     = $this->factory->create($type);
+        $type = new AuthorType();
+        $form = $this->factory->create($type);
 
         $object = new Author();
         $object->setName('test');
@@ -21,7 +21,7 @@ class AuthorTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($formData, $form->getData());
 
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {

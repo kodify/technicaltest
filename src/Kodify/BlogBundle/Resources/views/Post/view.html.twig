@@ -1,23 +1,32 @@
 {% extends 'KodifyBlogBundle::base.html.twig' %}
-
-{% block content %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a href="{{ path('view_post',{id: post.id}) }}">{{ post.title }}</a>
-            <span class="pull-right">by: {{ post.author.name }} on: {{ post.createdAt|date("m/d/Y") }}</span>
+{% block title %}Kodify Blog::{{ post.title }}{% endblock %}
+{% block header %}
+    <header class="intro-header" style="background-image: url({{ asset('bundles/kodifyblog/img/post-bg.jpg') }})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        <span class="meta">Posted by {{ post.author.name }} on: {{ post.createdAt|date("m/d/Y") }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            {{ post.content }}
-        </div>
-    </div>
-
-    {% include 'KodifyBlogBundle:Comment:view.html.twig' with {'post': post, 'formComment': formComment } %}
-
+    </header>
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {% javascripts '@KodifyBlogBundle/Resources/public/js/*' %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% block content %}
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {{ post.content }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {% include 'KodifyBlogBundle:Comment:view.html.twig' with {'post': post, 'formComment': formComment } %}
+                </div>
+            </div>
+        </div>
+    </article>
 {% endblock %}

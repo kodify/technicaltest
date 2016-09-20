@@ -51,6 +51,26 @@ class PostsControllerTest extends BaseFunctionalTest
     }
 
     /**
+     * Function to creates as much post as indicated in $count
+     * @param $count
+     */
+    protected function createPosts($count)
+    {
+        $author = new Author();
+        $author->setName('Author');
+        $this->entityManager()->persist($author);
+        $this->entityManager()->flush();
+        for ($i = 0; $i < $count; ++$i) {
+            $post = new Post();
+            $post->setTitle('Title' . $i);
+            $post->setContent('Content' . $i);
+            $post->setAuthor($author);
+            $this->entityManager()->persist($post);
+        }
+        $this->entityManager()->flush();
+    }
+
+    /**
      * test access to no existing post
      */
     public function testViewNonExistingPost()
@@ -70,26 +90,6 @@ class PostsControllerTest extends BaseFunctionalTest
         $this->assertTextFound($crawler, 'Content0');
         $this->assertTextNotFound($crawler, 'Title1');
         $this->assertTextNotFound($crawler, 'Content1');
-    }
-
-    /**
-     * Function to creates as much post as indicated in $count
-     * @param $count
-     */
-    protected function createPosts($count)
-    {
-        $author = new Author();
-        $author->setName('Author');
-        $this->entityManager()->persist($author);
-        $this->entityManager()->flush();
-        for ($i = 0; $i < $count; ++$i) {
-            $post = new Post();
-            $post->setTitle('Title' . $i);
-            $post->setContent('Content' . $i);
-            $post->setAuthor($author);
-            $this->entityManager()->persist($post);
-        }
-        $this->entityManager()->flush();
     }
 
     public function countDataProvider()

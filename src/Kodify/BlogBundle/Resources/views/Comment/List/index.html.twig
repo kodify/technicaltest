@@ -1,11 +1,7 @@
 {% for comment in post.latestComments %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span class="glyphicon glyphicon-user"></span>
-            <span>{{ comment.author.name }} on: {{ comment.createdAt|date("m/d/Y") }}</span>
-        </div>
-        <div class="panel-body">
-            {{ comment.text }}
-        </div>
+    <div class="comment">
+        {{ comment.text }}
+        <p class="meta">Written by {{ comment.author.name }} on: {{ comment.createdAt|date("m/d/Y") }}</p>
     </div>
+    <hr>
 {% endfor %}

@@ -28,9 +28,11 @@ class CommentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         //added option to pass post_transformer service
-        $resolver->setDefaults([
-            'post_transformer' => null
-        ]);
+        $resolver->setDefaults(
+            [
+                'post_transformer' => null,
+            ]
+        );
     }
 
 

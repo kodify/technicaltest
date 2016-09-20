@@ -13,39 +13,6 @@ use Kodify\BlogBundle\Tests\BaseFunctionalTest;
  */
 class CommentsControllerTest extends BaseFunctionalTest
 {
-    /**
-     * Function to creates as much comments as indicated in $count
-     * @param $count
-     */
-    protected function createComments($count)
-    {
-        //create author
-        $author = new Author();
-        $author->setName('Author');
-        $this->entityManager()->persist($author);
-        //create post
-        $post = new Post();
-        $post->setTitle('Title');
-        $post->setContent('Content');
-        $post->setAuthor($author);
-        $this->entityManager()->persist($post);
-
-        $author->addPost($post);
-        $this->entityManager()->flush();
-
-        for ($i = 0; $i < $count; ++$i) {
-            $comment = new Comment();
-            $comment->setAuthor($author);
-            $comment->setPost($post);
-            $comment->setText('Comment text');
-            $this->entityManager()->persist($comment);
-
-            $author->addComment($comment);
-            $post->addComment($comment);
-        }
-        $this->entityManager()->flush();
-    }
-
     public function countDataProvider()
     {
         $rand = rand(1, 10);
@@ -95,6 +62,39 @@ class CommentsControllerTest extends BaseFunctionalTest
             $crawler->filter('span[class="glyphicon glyphicon-user"]')->count(),
             "We should find $countToCheck messages from the author"
         );
+    }
+
+    /**
+     * Function to creates as much comments as indicated in $count
+     * @param $count
+     */
+    protected function createComments($count)
+    {
+        //create author
+        $author = new Author();
+        $author->setName('Author');
+        $this->entityManager()->persist($author);
+        //create post
+        $post = new Post();
+        $post->setTitle('Title');
+        $post->setContent('Content');
+        $post->setAuthor($author);
+        $this->entityManager()->persist($post);
+
+        $author->addPost($post);
+        $this->entityManager()->flush();
+
+        for ($i = 0; $i < $count; ++$i) {
+            $comment = new Comment();
+            $comment->setAuthor($author);
+            $comment->setPost($post);
+            $comment->setText('Comment text');
+            $this->entityManager()->persist($comment);
+
+            $author->addComment($comment);
+            $post->addComment($comment);
+        }
+        $this->entityManager()->flush();
     }
 
 }

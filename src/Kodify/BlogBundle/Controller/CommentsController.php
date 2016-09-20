@@ -29,14 +29,12 @@ class CommentsController extends Controller
             new CommentType(),
             $newComment,
             [
-                'action' => $this->generateUrl('create_comment', ['id' => $post->getId()]),
-                'method' => 'POST',
-                'post_transformer' => $this->get('kodify_blog.form.data_transformer.post_to_number')
+                'action'           => $this->generateUrl('create_comment', ['id' => $post->getId()]),
+                'method'           => 'POST',
+                'post_transformer' => $this->get('kodify_blog.form.data_transformer.post_to_number'),
             ]
         );
-        $parameters = [
-            'breadcrumbs' => ['home' => 'Home']
-        ];
+        $parameters = [];
 
         /** @var CommentCreateHandler $handler */
         $handler = $this->get('kodify.blog.create_comment');
@@ -46,7 +44,7 @@ class CommentsController extends Controller
             $request->getSession()->getFlashBag()->add('comment-success', 'Comment Created!');
 
             //if everything goes well redirect to the comments area in the post
-            $viewPostUrl = $this->generateUrl('view_post', ['id' => $post->getId()]). '#comments-area';
+            $viewPostUrl = $this->generateUrl('view_post', ['id' => $post->getId()]) . '#comments-area';
 
             return $this->redirect($viewPostUrl);
         }

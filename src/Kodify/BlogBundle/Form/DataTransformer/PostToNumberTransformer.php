@@ -46,17 +46,18 @@ class PostToNumberTransformer implements DataTransformerInterface
             return;
         }
 
-        $post = $this->entityManager->getRepository('KodifyBlogBundle:Post')->find($postNumber)
-        ;
+        $post = $this->entityManager->getRepository('KodifyBlogBundle:Post')->find($postNumber);
 
         if (null === $post) {
             // causes a validation error
             // this message is not shown to the user
             // see the invalid_message option
-            throw new TransformationFailedException(sprintf(
-                'An post with number "%s" does not exist!',
-                $postNumber
-            ));
+            throw new TransformationFailedException(
+                sprintf(
+                    'An post with number "%s" does not exist!',
+                    $postNumber
+                )
+            );
         }
 
         return $post;

@@ -13,11 +13,11 @@ class CommentTypeTest extends TypeTestCase
     {
         $formData = array(
             'text'   => 'test comment text',
-            'post' => new Post(),
-            'author'  => new Author(),
+            'post'   => new Post(),
+            'author' => new Author(),
         );
-        $type     = new CommentType();
-        $form     = $this->factory->create($type);
+        $type = new CommentType();
+        $form = $this->factory->create($type);
 
         $object = new Comment();
         $object->setText('test comment text');
@@ -25,7 +25,7 @@ class CommentTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($formData, $form->getData());
 
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {

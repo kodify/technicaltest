@@ -14,8 +14,8 @@ class PostTypeTest extends TypeTestCase
             'content' => 'testcontent',
             'author'  => 1,
         );
-        $type     = new PostType();
-        $form     = $this->factory->create($type);
+        $type = new PostType();
+        $form = $this->factory->create($type);
 
         $object = new Post();
         $object->setTitle('test');
@@ -24,7 +24,7 @@ class PostTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($formData, $form->getData());
 
-        $view     = $form->createView();
+        $view = $form->createView();
         $children = $view->children;
 
         foreach (array_keys($formData) as $key) {

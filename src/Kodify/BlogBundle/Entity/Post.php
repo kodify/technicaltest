@@ -16,6 +16,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Post extends AbstractBaseEntity
 {
     /**
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="posts")
+     * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
+     */
+    protected $author;
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist"})
+     * @ORM\OrderBy({"updatedAt" = "DESC"})
+     */
+    protected $comments;
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -23,7 +36,6 @@ class Post extends AbstractBaseEntity
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -32,28 +44,12 @@ class Post extends AbstractBaseEntity
      *
      */
     private $title;
-
     /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="content", type="text")
      */
     private $content;
-
-    /**
-     * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="Author", inversedBy="posts")
-     * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
-     */
-    protected $author;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist"})
-     * @ORM\OrderBy({"updatedAt" = "DESC"})
-     */
-    protected $comments;
 
     /**
      * Constructor
@@ -75,6 +71,16 @@ class Post extends AbstractBaseEntity
     }
 
     /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set title
      *
      * @param string $title
@@ -88,13 +94,13 @@ class Post extends AbstractBaseEntity
     }
 
     /**
-     * Get title
+     * Get content
      *
      * @return string
      */
-    public function getTitle()
+    public function getContent()
     {
-        return $this->title;
+        return $this->content;
     }
 
     /**
@@ -111,13 +117,13 @@ class Post extends AbstractBaseEntity
     }
 
     /**
-     * Get content
+     * Get author
      *
-     * @return string
+     * @return \Kodify\BlogBundle\Entity\Author
      */
-    public function getContent()
+    public function getAuthor()
     {
-        return $this->content;
+        return $this->author;
     }
 
     /**
@@ -131,16 +137,6 @@ class Post extends AbstractBaseEntity
         $this->author = $author;
 
         return $this;
-    }
-
-    /**
-     * Get author
-     *
-     * @return \Kodify\BlogBundle\Entity\Author
-     */
-    public function getAuthor()
-    {
-        return $this->author;
     }
 
     /**

@@ -16,6 +16,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Author extends AbstractBaseEntity
 {
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"persist"})
+     */
+    protected $posts;
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author", cascade={"persist"})
+     */
+    protected $comments;
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -23,7 +35,6 @@ class Author extends AbstractBaseEntity
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -31,20 +42,6 @@ class Author extends AbstractBaseEntity
      * @Assert\NotBlank()
      */
     private $name;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"persist"})
-     */
-    protected $posts;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author", cascade={"persist"})
-     */
-    protected $comments;
 
     /**
      * Constructor
@@ -71,6 +68,16 @@ class Author extends AbstractBaseEntity
     }
 
     /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
@@ -81,16 +88,6 @@ class Author extends AbstractBaseEntity
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

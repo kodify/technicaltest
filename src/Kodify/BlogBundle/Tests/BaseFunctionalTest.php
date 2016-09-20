@@ -15,25 +15,11 @@ abstract class BaseFunctionalTest extends WebTestCase
         $this->cleanDb();
     }
 
-    public function tearDown()
-    {
-        $this->cleanDb();
-    }
-
     protected function cleanDb()
     {
         $this->clearTableByName('Author');
         $this->clearTableByName('Post');
         $this->clearTableByName('Comment');
-    }
-
-    protected function entityManager()
-    {
-        if ($this->entityManager == null) {
-            $this->entityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
-        }
-
-        return $this->entityManager;
     }
 
     protected function clearTableByName($tableName)
@@ -52,6 +38,29 @@ abstract class BaseFunctionalTest extends WebTestCase
         }
     }
 
+    protected function entityManager()
+    {
+        if ($this->entityManager == null) {
+            $this->entityManager = static::$kernel->getContainer()->get('doctrine')->getManager();
+        }
+
+        return $this->entityManager;
+    }
+
+    public function tearDown()
+    {
+        $this->cleanDb();
+    }
+
+    protected function assertTextNotFound($crawler, $text, $message = null)
+    {
+        if (is_null($message)) {
+            $message = "{$text} Should not appear on the page";
+        }
+
+        return $this->assertTextFound($crawler, $text, 0, $message);
+    }
+
     protected function assertTextFound($crawler, $text, $times = 1, $message = '')
     {
         if ($message == '') {
@@ -62,14 +71,5 @@ abstract class BaseFunctionalTest extends WebTestCase
             $crawler->filter('html:contains("' . $text . '")')->count(),
             $message
         );
-    }
-
-    protected function assertTextNotFound($crawler, $text, $message = null)
-    {
-        if (is_null($message)) {
-            $message = "{$text} Should not appear on the page";
-        }
-
-        return $this->assertTextFound($crawler, $text, 0, $message);
     }
 }

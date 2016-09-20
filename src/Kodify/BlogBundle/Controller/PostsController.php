@@ -21,15 +21,9 @@ class PostsController extends Controller
      */
     public function indexAction()
     {
-        $posts      = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->latest();
-        $template   = 'KodifyBlogBundle:Post:List/empty.html.twig';
-        $parameters = ['breadcrumbs' => ['home' => 'Home']];
-        if (count($posts)) {
-            $template            = 'KodifyBlogBundle:Post:List/index.html.twig';
-            $parameters['posts'] = $posts;
-        }
+        $posts = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->latest();
 
-        return $this->render($template, $parameters);
+        return $this->render('KodifyBlogBundle::Post/list.html.twig', array('posts' => $posts));
     }
 
     /**
@@ -50,15 +44,14 @@ class PostsController extends Controller
             new CommentType(),
             $newComment,
             [
-                'action' => $this->generateUrl('create_comment', ['id' => $currentPost->getId()]),
-                'method' => 'POST',
-                'post_transformer' => $this->get('kodify_blog.form.data_transformer.post_to_number')
+                'action'           => $this->generateUrl('create_comment', ['id' => $currentPost->getId()]),
+                'method'           => 'POST',
+                'post_transformer' => $this->get('kodify_blog.form.data_transformer.post_to_number'),
             ]
         );
         $parameters = [
-            'breadcrumbs' => ['home' => 'Home'],
             'post'        => $currentPost,
-            'formComment' => $formComment->createView()
+            'formComment' => $formComment->createView(),
         ];
 
         return $this->render('KodifyBlogBundle::Post/view.html.twig', $parameters);
@@ -74,9 +67,8 @@ class PostsController extends Controller
                 'method' => 'POST',
             ]
         );
-        $parameters = [
-            'breadcrumbs' => ['home' => 'Home', 'create_post' => 'Create Post']
-        ];
+
+        $parameters = [];
 
         $form->handleRequest($request);
         if ($form->isValid()) {
