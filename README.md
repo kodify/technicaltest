@@ -17,9 +17,7 @@ The steps to start with the test are:
 
 1. Clone this repository
 
-2. Execute composer to install the required dependencies. (You will be required with some information, mainly about the mysql configuration) 
-
-    php composer.phar install
+2. Execute composer to install the required dependencies. (You will be required with some information, mainly about the mysql configuration)
 
 3. Do an empty commit with the message "I'm ready to start" for us to know the timing.
 
