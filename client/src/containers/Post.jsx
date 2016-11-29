@@ -30,7 +30,7 @@ class Post extends React.Component {
 
     return (
       <div>
-        <Menu />
+        <Menu baseUrl={config.baseUrl} />
         <Header
           titleText={post.title}
           subHeadingText={`Posted by ${post.author.name}`}
@@ -51,11 +51,10 @@ class Post extends React.Component {
   }
 }
 
-function mapStateToProps({ post, config, params }) {
+function mapStateToProps({ post, config }) {
   return {
     post,
     config,
-    params,
   };
 }
 

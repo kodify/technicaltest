@@ -8,6 +8,7 @@ function setUp(state) {
   const store = mockStore(state);
   const props = ({
     store,
+    params: { id: 1 },
   });
 
   const enzymeWrapper = mount(<Post {...props} />);
@@ -21,7 +22,6 @@ describe('home container', () => {
         location: '/',
         baseUrl: '/',
       },
-      params: { id: 1 },
       post: { id: 1, title: 'title1', content: 'content 1', author: { id: 1, name: 'author 1' }, createdAt: {}, updatedAt: {} },
     });
 
