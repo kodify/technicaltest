@@ -6,6 +6,10 @@
         "import"
     ],
     "globals": {
-        "window": true
+        "window": true,
+        "fetch": true
+    },
+    "env": {
+        "jasmine": true
     }
 }

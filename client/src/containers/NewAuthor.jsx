@@ -53,7 +53,12 @@ class NewAuthor extends React.Component {
                   Name
                 </Col>
                 <Col sm={10}>
-                  <FormControl type="author" value={this.state.authorName} onChange={this.updateAuthorName} placeholder="Author Name" />
+                  <FormControl
+                    type="author"
+                    value={this.state.authorName}
+                    onChange={this.updateAuthorName}
+                    placeholder="Author Name"
+                  />
                   <FormControl.Feedback />
                   <HelpBlock>Validation is based on string length.</HelpBlock>
                 </Col>
@@ -73,18 +78,22 @@ class NewAuthor extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSaveAuthor: (authorName) => {
-      dispatch(Actions.createAuthor(authorName));
-    },
-  };
-}
+NewAuthor.propTypes = {
+  config: React.PropTypes.shape({
+    baseUrl: React.PropTypes.string,
+    location: React.PropTypes.string,
+  }),
+  onSaveAuthor: React.PropTypes.func,
+};
 
-const mapStateToProps = ({ config }) => {
-  return {
-    config,
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onSaveAuthor: (authorName) => {
+    dispatch(Actions.createAuthor(authorName));
+  },
+});
+
+const mapStateToProps = ({ config }) => ({
+  config,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAuthor);

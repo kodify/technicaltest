@@ -8,7 +8,7 @@ import configureStore from '../store/BlogStore';
 const mainNode = (props) => {
   const store = configureStore(props, browserHistory);
 
-  const history = syncHistoryWithStore(browserHistory, store)
+  const history = syncHistoryWithStore(browserHistory, store);
 
   const reactComponent = (
     <Provider store={store}>

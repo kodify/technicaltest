@@ -41,7 +41,7 @@ class PostsControllerTest extends BaseFunctionalTest
 
         $this->assertSame(
             $countToCheck,
-            substr_count($crawler->html(), 'by: Author'),
+            substr_count($crawler->html(), 'Posted by'),
             "We should find $countToCheck messages from the author"
         );
         for ($i = 0; $i < $countToCheck; ++$i) {
@@ -56,8 +56,7 @@ class PostsControllerTest extends BaseFunctionalTest
      */
     protected function createPosts($count)
     {
-        $author = new Author();
-        $author->setName('Author');
+        $author = new Author('Author');
         $this->entityManager()->persist($author);
         $this->entityManager()->flush();
         for ($i = 0; $i < $count; ++$i) {
@@ -90,6 +89,41 @@ class PostsControllerTest extends BaseFunctionalTest
         $this->assertTextFound($crawler, 'Content0');
         $this->assertTextNotFound($crawler, 'Title1');
         $this->assertTextNotFound($crawler, 'Content1');
+    }
+
+    public function testPostNew()
+    {
+        $crawler = $this->client->request('GET', '/posts/create');
+        $this->assertTextFound($crawler, "Validation is based on string length.");
+        $this->assertTextFound($crawler, "New Post");
+    }
+
+    public function testApiPost(){
+        $this->createPosts(2);
+        $crawler = $this->client->request('GET', '/api/post/1');
+
+        $this->assertTextFound($crawler, 'id');
+    }
+
+    public function testApiPosts(){
+        $this->createPosts(2);
+        $crawler = $this->client->request('GET', '/api/posts');
+
+        $this->assertTextFound($crawler, "Title0");
+        $this->assertTextFound($crawler, "Title1");
+    }
+
+    public function testApiCreatePost(){
+        $crawler = $this->client->request(
+            "POST",
+            "/api/post/new",
+            array(),
+            array(),
+            array(),
+            json_encode(array("title" => 'testTitle', "author" => 1, "content" => "test content"))
+        );
+
+        $this->assertTextFound($crawler, '"id":1,"name":"testAuthor","posts":[]');
     }
 
     public function countDataProvider()

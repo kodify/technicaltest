@@ -6,10 +6,6 @@ import Header from '../components/Header';
 import Actions from '../actions/BlogActions';
 
 class NewPost extends React.Component {
-  static propTypes = {
-    authors: React.PropTypes.array,
-  }
-
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -109,29 +105,44 @@ class NewPost extends React.Component {
         />
         <div className="row">
           <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            {!this.state.valid && <Alert bsStyle="warning"><strong>Form not valid</strong> Please check everything is ok and click send</Alert>}
+            {!this.state.valid &&
+              <Alert bsStyle="warning">
+                <strong>Form not valid</strong> Please check everything is ok and click send
+              </Alert>
+            }
             <Form horizontal onSubmit={this.handleSubmit}>
               <FormGroup controlId="title" validationState={this.getTitleValidationState()} >
                 <Col componentClass={ControlLabel} sm={2}>
                   Title
                 </Col>
                 <Col sm={10}>
-                  <FormControl type="text" value={this.state.title} onChange={this.updateTitle} placeholder="Title" />
+                  <FormControl
+                    type="text"
+                    value={this.state.title}
+                    onChange={this.updateTitle}
+                    placeholder="Title"
+                  />
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="formControlsSelect" validationState={this.getAuthorValidationState()}>
+              <FormGroup
+                controlId="formControlsSelect"
+                validationState={this.getAuthorValidationState()}
+              >
                 <Col componentClass={ControlLabel} sm={2}>
                   Author
                 </Col>
                 <Col sm={10}>
-                  <FormControl componentClass="select" placeholder="select" onChange={this.updateAuthor} value={this.state.author} >
+                  <FormControl
+                    componentClass="select"
+                    placeholder="select"
+                    onChange={this.updateAuthor}
+                    value={this.state.author}
+                  >
                     <option value="">Select and author</option>
-                    {authors.map((author, index) => {
-                      return (
-                        <option value={author.id} key={index}>{author.name}</option>
-                      );
-                    })}
+                    {authors.map((author, index) => (
+                      <option value={author.id} key={index}>{author.name}</option>
+                    ))}
                   </FormControl>
                   <FormControl.Feedback />
                 </Col>
@@ -141,7 +152,12 @@ class NewPost extends React.Component {
                   Content
                 </Col>
                 <Col sm={10}>
-                  <FormControl componentClass="textarea" value={this.state.content} onChange={this.updateContent} placeholder="Post Content" />
+                  <FormControl
+                    componentClass="textarea"
+                    value={this.state.content}
+                    onChange={this.updateContent}
+                    placeholder="Post Content"
+                  />
                   <FormControl.Feedback />
                   <HelpBlock>Validation is based on string length.</HelpBlock>
                 </Col>
@@ -161,22 +177,34 @@ class NewPost extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSavePost: (data) => {
-      dispatch(Actions.createPost(data));
-    },
-    onAuthorFetch: () => {
-      dispatch(Actions.fetchAuthors());
-    }
-  };
-}
+NewPost.propTypes = {
+  config: React.PropTypes.shape({
+    baseUrl: React.PropTypes.string,
+    location: React.PropTypes.string,
+  }),
+  authors: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number,
+    name: React.PropTypes.string,
+    posts: React.PropTypes.array,
+    createdAt: React.PropTypes.object,
+    updatedAt: React.PropTypes.object,
+  })),
+  onAuthorFetch: React.PropTypes.func,
+  onSavePost: React.PropTypes.func,
+};
 
-const mapStateToProps = ({ config, authors }) => {
-  return {
-    config,
-    authors
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onSavePost: (data) => {
+    dispatch(Actions.createPost(data));
+  },
+  onAuthorFetch: () => {
+    dispatch(Actions.fetchAuthors());
+  },
+});
+
+const mapStateToProps = ({ config, authors }) => ({
+  config,
+  authors,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPost);

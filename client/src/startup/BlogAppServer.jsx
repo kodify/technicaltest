@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { match, RouterContext, browserHistory } from 'react-router';
+import { match, RouterContext } from 'react-router';
 import React from 'react';
 import configureRoutes from '../routes/Index';
 import configureStore from '../store/BlogStore';
