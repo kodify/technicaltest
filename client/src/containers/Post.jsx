@@ -6,16 +6,16 @@ import Header from '../components/Header';
 
 class Post extends React.Component {
   componentDidMount() {
-    if (!this.props.post || this.props.post.id !== this.props.params.id) {
+    const { post, params } = this.props;
+    if (post.id === undefined || post.id !== parseInt(params.id, 10)) {
       const { dispatch } = this.props;
       dispatch(Actions.fetchPost(this.props.params.id));
     }
   }
 
   render() {
-    const { post, config, fetching, params } = this.props;
-
-    if (fetching || !post || post.id !== params.id) {
+    const { post, config, params } = this.props;
+    if (post.id === undefined || post.id !== parseInt(params.id, 10)) {
       return (
         <div>
           <Menu baseUrl={config.baseUrl} />
@@ -51,13 +51,11 @@ class Post extends React.Component {
   }
 }
 
-function mapStateToProps({ post, config, params, dispatch, fetching }) {
+function mapStateToProps({ post, config, params }) {
   return {
     post,
     config,
     params,
-    dispatch,
-    fetching,
   };
 }
 
@@ -77,7 +75,6 @@ Post.propTypes = {
   // eslint-disable-next-line
   params: React.PropTypes.object,
   dispatch: React.PropTypes.func,
-  fetching: React.PropTypes.bool,
 };
 
 export default connect(mapStateToProps)(Post);

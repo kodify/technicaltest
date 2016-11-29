@@ -40,7 +40,11 @@ class PostsController extends ReactController
         $serializer = $this->get('serializer');
         $posts = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->latest();
 
-        return new Response($serializer->serialize($posts,'json'),200);
+        return new Response(
+            $serializer->serialize($posts,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 
     /**
@@ -75,7 +79,11 @@ class PostsController extends ReactController
             throw $this->createNotFoundException('Post not found');
         }
 
-        return new Response($serializer->serialize($currentPost,'json'),200);
+        return new Response(
+            $serializer->serialize($currentPost,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 
     public function createAction(Request $request)
@@ -106,6 +114,10 @@ class PostsController extends ReactController
         $manager->persist($post);
         $manager->flush();
 
-        return new Response($serializer->serialize($post,'json'),200);
+        return new Response(
+            $serializer->serialize($post,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 }

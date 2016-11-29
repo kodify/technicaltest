@@ -46,7 +46,11 @@ class AuthorsController extends ReactController
         $manager->persist($author);
         $manager->flush();
 
-        return new Response($serializer->serialize($author,'json'),200);
+        return new Response(
+            $serializer->serialize($author,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 
     public function apiAuthorsAction()
@@ -54,6 +58,10 @@ class AuthorsController extends ReactController
         $serializer = $this->get('serializer');
         $authors = $this->getDoctrine()->getRepository('KodifyBlogBundle:Author')->findAll();
 
-        return new Response($serializer->serialize($authors,'json'),200);
+        return new Response(
+            $serializer->serialize($authors,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 }
