@@ -21,11 +21,11 @@ The steps to start with the test are:
 
 3. Execute npm install to install all js required dependecies.
 
-3. We have provided you with a fully functional webpack setup. To make it work, just execute npm start. This will run a webpack-dev-server for frontend renderind and a webpack --watch for server rendering. 
+4. We have provided you with a fully functional webpack setup. To make it work, just execute npm start. This will run a webpack-dev-server for frontend renderind and a webpack --watch for server rendering. 
 
-4. Do an empty commit with the message "I'm ready to start" for us to know the timing.
+5. Do an empty commit with the message "I'm ready to start" for us to know the timing.
 
-5. Ready to go!! 
+6. Ready to go!! 
 
 ## The Test
 
