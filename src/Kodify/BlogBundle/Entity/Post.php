@@ -22,13 +22,6 @@ class Post extends AbstractBaseEntity
      */
     protected $author;
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist"})
-     * @ORM\OrderBy({"updatedAt" = "DESC"})
-     */
-    protected $comments;
-    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -137,56 +130,6 @@ class Post extends AbstractBaseEntity
         $this->author = $author;
 
         return $this;
-    }
-
-    /**
-     * Add a comment if it's not already associated with the author
-     *
-     * @param Comment $comment
-     * @return Author
-     */
-    public function addComment(Comment $comment)
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove a comment if it's associated with this author,
-     *
-     * @param Comment $comment
-     * @return Author
-     */
-    public function removeComment(Comment $comment)
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get all comments associated with this post
-     *
-     * @return ArrayCollection
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * Get last 10 comments associated with this post
-     *
-     * @return ArrayCollection
-     */
-    public function getLatestComments()
-    {
-        return $this->comments->slice(0, 10);
     }
 
 

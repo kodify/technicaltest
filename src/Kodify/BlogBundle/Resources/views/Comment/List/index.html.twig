@@ -1,7 +1,0 @@
-{% for comment in post.latestComments %}
-    <div class="comment">
-        {{ comment.text }}
-        <p class="meta">Written by {{ comment.author.name }} on: {{ comment.createdAt|date("m/d/Y") }}</p>
-    </div>
-    <hr>
-{% endfor %}

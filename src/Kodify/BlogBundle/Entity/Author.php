@@ -21,12 +21,7 @@ class Author extends AbstractBaseEntity
      * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"persist"})
      */
     protected $posts;
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author", cascade={"persist"})
-     */
-    protected $comments;
+
     /**
      * @var integer
      *
@@ -46,8 +41,9 @@ class Author extends AbstractBaseEntity
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($name)
     {
+        $this->name = $name;
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -75,19 +71,6 @@ class Author extends AbstractBaseEntity
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Author
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -128,45 +111,5 @@ class Author extends AbstractBaseEntity
     public function getPosts()
     {
         return $this->posts;
-    }
-
-    /**
-     * Add a comment if it's not already associated with the author
-     *
-     * @param Comment $comment
-     * @return Author
-     */
-    public function addComment(Comment $comment)
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove a comment if it's associated with this author,
-     *
-     * @param Comment $comment
-     * @return Author
-     */
-    public function removeComment(Comment $comment)
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get all comments associated with this author
-     *
-     * @return ArrayCollection
-     */
-    public function getComments()
-    {
-        return $this->comments;
     }
 }

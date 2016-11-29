@@ -1,6 +1,7 @@
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
+/app/Resources/webpack
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
@@ -26,6 +27,9 @@
 !bin/symfony_requirements
 /vendor/
 
+# Node
+/node_modules
+
 # Assets and user uploads
 /web/*
 /web/bundles/
@@ -38,3 +42,4 @@ Vagrantfile
 /.vagrant/
 
 composer.phar
+.eslintcache

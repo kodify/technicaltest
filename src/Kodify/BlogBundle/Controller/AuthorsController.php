@@ -5,25 +5,17 @@ namespace Kodify\BlogBundle\Controller;
 use Kodify\BlogBundle\Entity\Author;
 use Kodify\BlogBundle\Form\Type\AuthorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class AuthorsController
  * @package Kodify\BlogBundle\Controller
  */
-class AuthorsController extends Controller
+class AuthorsController extends ReactController
 {
-    /**
-     * Show 5 authors where 5 is the limit defined in AuthorRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction()
-    {
-        $authors = $this->getDoctrine()->getRepository('KodifyBlogBundle:Author')->latest();
-
-        return $this->render('KodifyBlogBundle::Author/list.html.twig', array('authors' => $authors));
-    }
-
     /**
      * Function to create a new author
      * @param Request $request
@@ -31,27 +23,37 @@ class AuthorsController extends Controller
      */
     public function createAction(Request $request)
     {
-        $form = $this->createForm(
-            new AuthorType(),
-            new Author(),
-            [
-                'action' => $this->generateUrl('create_author'),
-                'method' => 'POST',
-            ]
-        );
-        $parameters = [];
+        $serializer = $this->get('serializer');
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $author = $form->getData();
-            $this->getDoctrine()->getManager()->persist($author);
-            $this->getDoctrine()->getManager()->flush();
-            $parameters['message'] = 'Author Created!';
+        return $this->render('base.html.twig', ['props' => $serializer->serialize(
+                $this->getBaseProps($request)
+            ,'json')
+        ]);
+    }
+
+    public function apiCreateAuthorAction(Request $request)
+    {
+        $content = $this->getContentAsArray($request);
+        $serializer = $this->get('serializer');
+
+        if(empty($content['authorName']))
+        {
+            throw new BadRequestHttpException("Invalid author name");
         }
 
-        // the form element should be passed to the view after validate it to show errors
-        $parameters['form'] = $form->createView();
+        $manager = $this->getDoctrine()->getManager();
+        $author = new Author($content['authorName']);
+        $manager->persist($author);
+        $manager->flush();
 
-        return $this->render('KodifyBlogBundle:Default:create.html.twig', $parameters);
+        return new Response($serializer->serialize($author,'json'),200);
+    }
+
+    public function apiAuthorsAction()
+    {
+        $serializer = $this->get('serializer');
+        $authors = $this->getDoctrine()->getRepository('KodifyBlogBundle:Author')->findAll();
+
+        return new Response($serializer->serialize($authors,'json'),200);
     }
 }
