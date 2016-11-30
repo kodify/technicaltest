@@ -6,24 +6,45 @@ use Kodify\BlogBundle\Entity\Comment;
 use Kodify\BlogBundle\Entity\Post;
 use Kodify\BlogBundle\Form\Type\CommentType;
 use Kodify\BlogBundle\Form\Type\PostType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Class PostsController
  * @package Kodify\BlogBundle\Controller
  */
-class PostsController extends Controller
+class PostsController extends ReactController
 {
     /**
      * Show 5 post where 5 is the limit defined in PostRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $posts = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->latest();
+        $serializer = $this->get('serializer');
 
-        return $this->render('KodifyBlogBundle::Post/list.html.twig', array('posts' => $posts));
+        return $this->render('base.html.twig', ['props' => $serializer->serialize(
+            array_merge(
+                $this->getBaseProps($request),
+                ['posts' => $posts]
+            )
+            ,'json')
+        ]);
+    }
+
+    public function apiPostsAction()
+    {
+        $serializer = $this->get('serializer');
+        $posts = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->latest();
+
+        return new Response(
+            $serializer->serialize($posts,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 
     /**
@@ -31,56 +52,72 @@ class PostsController extends Controller
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction($id)
+    public function viewAction($id, Request $request)
     {
+        $serializer = $this->get('serializer');
         $currentPost = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->find($id);
+
         if (!$currentPost instanceof Post) {
             throw $this->createNotFoundException('Post not found');
         }
-        //Create new object Comment and set the attribute post to make easier the creation of a new comment
-        $newComment = new Comment();
-        $newComment->setPost($currentPost);
-        $formComment = $this->createForm(
-            new CommentType(),
-            $newComment,
-            [
-                'action'           => $this->generateUrl('create_comment', ['id' => $currentPost->getId()]),
-                'method'           => 'POST',
-                'post_transformer' => $this->get('kodify_blog.form.data_transformer.post_to_number'),
-            ]
-        );
-        $parameters = [
-            'post'        => $currentPost,
-            'formComment' => $formComment->createView(),
-        ];
 
-        return $this->render('KodifyBlogBundle::Post/view.html.twig', $parameters);
+        return $this->render('base.html.twig', ['props' => $serializer->serialize(
+            array_merge(
+                $this->getBaseProps($request),
+                ['post' => $currentPost]
+            )
+            ,'json')
+        ]);
+    }
+
+    public function apiPostAction($id)
+    {
+        $currentPost = $this->getDoctrine()->getRepository('KodifyBlogBundle:Post')->find($id);
+        $serializer = $this->get('serializer');
+
+        if (!$currentPost instanceof Post) {
+            throw $this->createNotFoundException('Post not found');
+        }
+
+        return new Response(
+            $serializer->serialize($currentPost,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 
     public function createAction(Request $request)
     {
-        $form = $this->createForm(
-            new PostType(),
-            new Post(),
-            [
-                'action' => $this->generateUrl('create_post'),
-                'method' => 'POST',
-            ]
+        $serializer = $this->get('serializer');
+
+        $authors = $this->getDoctrine()->getRepository('KodifyBlogBundle:Author')->findAll();
+
+        return $this->render('base.html.twig', ['props' => $serializer->serialize(
+            array_merge(
+                $this->getBaseProps($request),
+                array('authors' => $authors)
+            )
+            ,'json')
+        ]);
+    }
+
+    public function apiCreatePostAction(Request $request)
+    {
+        $content = $this->getContentAsArray($request);
+        $serializer = $this->get('serializer');
+
+        $manager = $this->getDoctrine()->getManager();
+        $post = new Post();
+        $post->setTitle($content['title']);
+        $post->setAuthor($manager->getReference('KodifyBlogBundle:Author',$content['author']));
+        $post->setContent($content['content']);
+        $manager->persist($post);
+        $manager->flush();
+
+        return new Response(
+            $serializer->serialize($post,'json'),
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
         );
-
-        $parameters = [];
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $post = $form->getData();
-            $this->getDoctrine()->getManager()->persist($post);
-            $this->getDoctrine()->getManager()->flush();
-            $parameters['message'] = 'Post Created!';
-        }
-
-        // the form element should be passed to the view after validate it to show errors
-        $parameters['form'] = $form->createView();
-
-        return $this->render('KodifyBlogBundle:Default:create.html.twig', $parameters);
     }
 }

@@ -1,0 +1,15 @@
+{
+    "extends": "airbnb",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
+    "globals": {
+        "window": true,
+        "fetch": true
+    },
+    "env": {
+        "jasmine": true
+    }
+}

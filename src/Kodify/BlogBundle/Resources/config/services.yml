@@ -1,6 +1,7 @@
-imports:
-    - { resource: 'services/handlers.yml' }
 services:
-      kodify_blog.form.data_transformer.post_to_number:
-          class: Kodify\BlogBundle\Form\DataTransformer\PostToNumberTransformer
-          arguments: ["@doctrine.orm.entity_manager"]
+    kodify_blog.serializer.normalizer.object:
+        class: Kodify\BlogBundle\Normalizer\Normalizer
+        public: false
+        parent: serializer.normalizer.object
+        tags:
+            - { name: serializer.normalizer }

@@ -7,46 +7,49 @@ use Kodify\BlogBundle\Tests\BaseFunctionalTest;
 
 class AuthorsControllerTest extends BaseFunctionalTest
 {
-    public function testIndexNoAuthors()
+    public function testApiAuthorsNoAuthors()
     {
-        $crawler = $this->client->request('GET', '/authors');
-        $this->assertTextFound($crawler, "There are no authors, let's create some!!");
+        $crawler = $this->client->request('GET', '/api/authors');
+        $this->assertTextFound($crawler, "[]");
     }
 
-    public function testIndexWithAuthors()
+    public function testApiAuthorsxWithAuthors()
     {
         $this->createAuthors(10);
-        $crawler = $this->client->request('GET', '/authors');
-        $this->assertTextNotFound($crawler, "There are no authors, let's create some!!");
+        $crawler = $this->client->request('GET', '/api/authors');
+
         $this->assertSame(
-            8,
-            substr_count($crawler->html(), 'Name'),
-            "We should find 8 authors listed"
+            10,
+            substr_count($crawler->html(), 'id')
         );
+    }
+
+    public function testAuthorNew()
+    {
+        $crawler = $this->client->request('GET', '/author/new');
+        $this->assertTextFound($crawler, "Validation is based on string length");
+        $this->assertTextFound($crawler, "New Author");
+    }
+
+    public function testApiCreateAuthor(){
+        $crawler = $this->client->request(
+            "POST",
+            "/api/author/new",
+            array(),
+            array(),
+            array(),
+            json_encode(array("authorName" => 'testAuthor'))
+        );
+
+        $this->assertTextFound($crawler, '"id":1');
     }
 
     protected function createAuthors($count)
     {
         for ($i = 0; $i < $count; ++$i) {
-            $author = new Author();
-            $author->setName("Name{$i}");
+            $author = new Author("Name{$i}");
             $this->entityManager()->persist($author);
         }
         $this->entityManager()->flush();
     }
-
-    public function testCreateAuthorGetRequest()
-    {
-        $crawler = $this->client->request('GET', '/authors/create');
-        $this->assertTextNotFound($crawler, "Author Created!");
-        $this->assertTextFound($crawler, 'Name');
-    }
-
-    public function testCreateAuthorPostRequestNoData()
-    {
-        $crawler = $this->client->request('POST', '/authors/create');
-        $this->assertTextNotFound($crawler, "Author Created!");
-        $this->assertTextFound($crawler, 'Name');
-    }
-
 }

@@ -10,10 +10,29 @@ create_post:
 view_post:
     path:     /posts/{id}
     defaults: { _controller: KodifyBlogBundle:Posts:view }
+    requirements:
+        id: '\d+'
 create_author:
-    path:     /authors/create
+    path:     /author/new
     defaults: { _controller: KodifyBlogBundle:Authors:create }
-# Comments
-create_comment:
-    path:     /comments/create/{id}
-    defaults: { _controller: KodifyBlogBundle:Comments:create }
+
+#api
+api_posts:
+    path: /api/posts
+    defaults: { _controller: KodifyBlogBundle:Posts:apiPosts }
+api_post:
+    path: /api/post/{id}
+    defaults: { _controller: KodifyBlogBundle:Posts:apiPost }
+    requirements:
+        id: '\d+'
+api_authors:
+    path: /api/authors
+    defaults: { _controller: KodifyBlogBundle:Authors:apiAuthors }
+api_createAuthor:
+    path: /api/author/new
+    methods: [POST]
+    defaults: { _controller: KodifyBlogBundle:Authors:apiCreateAuthor }
+api_createPost:
+    path: /api/post/new
+    methods: [POST]
+    defaults: { _controller: KodifyBlogBundle:Posts:apiCreatePost }
