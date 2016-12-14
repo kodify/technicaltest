@@ -4,7 +4,7 @@ const APP_DIR = path.resolve(__dirname, 'client/src/startup');
 const isProd = (process.env.NODE_ENV === 'production');
 
 var config = {
-  entry: APP_DIR + '/clientRegistration.jsx',
+  entry: APP_DIR + '/ClientRegistration.jsx',
   output: {
     path: './web/assets/build/',
     publicPath: '/assets/build/',

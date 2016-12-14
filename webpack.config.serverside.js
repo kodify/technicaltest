@@ -6,7 +6,7 @@ const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
 
 const config = {
-  entry: APP_DIR + '/serverRegistration.jsx',
+  entry: APP_DIR + '/ServerRegistration.jsx',
   output: {
     filename: 'app/Resources/webpack/server-bundle.js',
   },
